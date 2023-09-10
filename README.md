@@ -1,0 +1,3 @@
+# wxIndustrialControls
+wxWidgets controls for SCADA applications
+Check the Wiki page...
