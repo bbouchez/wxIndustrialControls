@@ -80,6 +80,7 @@ void wxStaticRotaryEncoder::Init (void)
 	LastTouchY = 0;
 	PulseDivider = 0;
 	EncoderActive = false;
+	this->IsRelative = false;
 }  // wxStaticRotaryEncoder::Init
 // ----------------------------------------------------------------------------
 
@@ -123,7 +124,7 @@ void wxStaticRotaryEncoder::OnMouse(wxMouseEvent& event)
 		EncoderActive = false;
 	}
 
-	if (event.LeftDown() && MouseInControl)
+	if (event.LeftDown() && MouseInControl )
 	{
 		EncoderActive = true;
 		PulseDivider = 0;
@@ -274,6 +275,21 @@ void wxStaticRotaryEncoder::SetValue(int Value)
 }  // wxStaticRotaryEncoder::SetValue
 // ----------------------------------------------------------------------------
 
+int wxStaticRotaryEncoder::GetValue(void) 
+{ 
+	int LastValue;
+
+	if (this->IsRelative==false)
+		return mValue; 
+	else
+	{
+		LastValue = this->mValue;
+		mValue = 0;
+		return LastValue;
+	}
+}  // wxStaticRotaryEncoder::GetValue
+// ----------------------------------------------------------------------------
+
 void wxStaticRotaryEncoder::SetMinValue (int Value)
 {
     mMin = Value;
@@ -288,5 +304,8 @@ void wxStaticRotaryEncoder::SetMaxValue (int Value)
 }  // wxStaticRotaryEncoder::SetMaxValue
 // ----------------------------------------------------------------------------
 
-
-
+void wxStaticRotaryEncoder::SetRelativeMode(bool Active)
+{
+	this->IsRelative = Active;
+}  // wxStaticRotaryEncoder::SetRelativeMode
+// ----------------------------------------------------------------------------

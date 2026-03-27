@@ -7,8 +7,8 @@
  * License:   wxWindows licence
  **************************************************************/
 
-#ifndef __KICKBITMAPBUTTON_H__
-#define __KICKBITMAPBUTTON_H__
+#ifndef __WXKICKBITMAPBUTTON_H__
+#define __WXKICKBITMAPBUTTON_H__
 
 #include "wx/wxprec.h"
 
@@ -27,8 +27,8 @@ public:
 	
 	wxKickBitmapButton(wxWindow *parent,
                    wxWindowID id,
-                   wxBitmap& offBitmap,
-				   wxBitmap& onBitmap,
+                   wxBitmap* offBitmap,
+				   wxBitmap* onBitmap,
                    const wxPoint& pos = wxDefaultPosition,
                    const wxSize& size = wxDefaultSize,
                    long style = wxBORDER_NONE,
@@ -52,6 +52,7 @@ private:
 	wxBitmap* mOffBitmap;
 	wxBitmap* mOnBitmap;
 	wxWindowID mId;
+	wxSize mSize;
 	bool MouseInControl;			// Mouse cursor is on the control surface
 	bool mState;
 };

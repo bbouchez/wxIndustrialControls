@@ -7,8 +7,8 @@
  * License:   wxWindows licence
  **************************************************************/
 
-#ifndef __ONOFFBITMAPBUTTON_H__
-#define __ONOFFBITMAPBUTTON_H__
+#ifndef __WXONOFFBITMAPBUTTON_H__
+#define __WXONOFFBITMAPBUTTON_H__
 
 #include "wx/wxprec.h"
 
@@ -27,8 +27,8 @@ public:
 
 	wxOnOffBitmapButton(wxWindow *parent,
                    wxWindowID id,
-                   wxBitmap& offBitmap,
-				   wxBitmap& onBitmap,
+                   wxBitmap* offBitmap,
+				   wxBitmap* onBitmap,
                    const wxPoint& pos = wxDefaultPosition,
                    const wxSize& size = wxDefaultSize,
                    long style = wxBORDER_NONE,
@@ -62,6 +62,7 @@ private:
 	wxWindowID mId;
 	bool MouseInControl;			// Mouse cursor is on the control surface
 	bool UserToggleAllowed;
+	wxSize mSize;
 };
 
 #endif  // __ONOFFBITMAPBUTTON_H__

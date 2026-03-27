@@ -10,7 +10,12 @@
  /* This wxWidget is an equivalent of the KickButton from VSTGUI framework.
  Button sends an event when clicked. One bitmap is displayed during the click
  A second bitmap is displayed when button is released
- The two bitmaps must have the same size */
+ The two bitmaps must have the same size 
+ 
+ New function (added 04/02/2024) :
+- if onBitmap = 0, the button uses a stacked bitmap given by offBitmap
+Top half of bitmap is OFF state, bottom half of bitmap is ON state
+ */
 
 #include "wxKickBitmapButton.h"
 
@@ -23,8 +28,8 @@ END_EVENT_TABLE()
 
 wxKickBitmapButton::wxKickBitmapButton (wxWindow *parent,
                    wxWindowID id,
-                   wxBitmap& offBitmap,
-				   wxBitmap& onBitmap,
+                   wxBitmap* offBitmap,
+				   wxBitmap* onBitmap,
                    const wxPoint& pos,
                    const wxSize& size,
                    long style,
@@ -34,9 +39,10 @@ wxKickBitmapButton::wxKickBitmapButton (wxWindow *parent,
 
 	this->Init();
 
+	this->mSize = size;
 	this->mId=id;
-	this->mOffBitmap=&offBitmap;
-	this->mOnBitmap=&onBitmap;
+	this->mOffBitmap=offBitmap;
+	this->mOnBitmap=onBitmap;
 
 	if (parent)
 		SetBackgroundColour(parent->GetBackgroundColour());
@@ -95,11 +101,23 @@ void wxKickBitmapButton::OnMouse(wxMouseEvent& event)
 void wxKickBitmapButton::OnPaint(wxPaintEvent& WXUNUSED(event))
 {
 	wxPaintDC dc(this);
+	wxMemoryDC temp_dc;
 
-	if (this->mState)
-		dc.DrawBitmap(*mOnBitmap, 0, 0, TRUE);
+	if (this->mOnBitmap)
+	{  // Button uses two different bitmaps
+		if (this->mState)
+			dc.DrawBitmap(*mOnBitmap, 0, 0, TRUE);
+		else
+			dc.DrawBitmap(*mOffBitmap, 0, 0, TRUE);
+	}
 	else
-		dc.DrawBitmap(*mOffBitmap, 0, 0, TRUE);
+	{
+		temp_dc.SelectObject(*this->mOffBitmap);
+		if (this->mState)
+			dc.Blit(wxPoint(0, 0), wxSize(this->mSize.GetWidth(), this->mSize.GetHeight()), &temp_dc, wxPoint(0, this->mSize.GetHeight()));
+		else
+			dc.Blit(wxPoint(0, 0), wxSize(this->mSize.GetWidth(), this->mSize.GetHeight()), &temp_dc, wxPoint(0, 0));
+	}
 }  // wxKickBitmapButton::OnPaint
 // ----------------------------------------------------------------------------
 

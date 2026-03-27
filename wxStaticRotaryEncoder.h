@@ -49,11 +49,13 @@ public:
 	// Nothing allocated dynamically by the class : keep the default destructor
 	// virtual ~wxStaticRotaryEncoder();
 
-	int GetValue() { return mValue ; };
+	int GetValue(void);
 	void SetValue(int value);
 
 	void SetMinValue (int Value);
 	void SetMaxValue (int Value);
+
+	void SetRelativeMode(bool Active);
 
 protected:
 	void Init(void);
@@ -78,6 +80,7 @@ private:
 	int OneThirdX, TwoThirdX;		// Control is splitted in 9 zones (quadrants)
 	int OneThirdY, TwoThirdY;
 	int mMin, mMax;				// Minimum and maximum value
+	bool IsRelative;			// Relative mode activated
 };
 
 #endif		// __STATICROTARYENCODER_H__
