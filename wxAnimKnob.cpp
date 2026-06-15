@@ -1,7 +1,6 @@
 /***************************************************************
  * Name:      wxAnimKnob.cpp
  * Purpose:   Animated bitmap knob widget for wxWidgets
- * Author:    Benoit BOUCHEZ (BEB)
  * Created:   2024-02-01
  * Copyright: (c) Benoit BOUCHEZ
  * License:	  wxWidgets license
@@ -159,7 +158,7 @@ void wxAnimKnob::Draw(wxDC& dc)
 	unsigned int SourceOffsetY;
 	unsigned int ImageIndex;
 
-	ImageIndex = floor(this->fValue*this->mNumBitmaps);
+	ImageIndex = floor(this->fValue*(this->mNumBitmaps-1));
 
 	SourceOffsetY = this->mSubBmpHeight*ImageIndex;
 
